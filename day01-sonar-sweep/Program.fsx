@@ -7,8 +7,7 @@ let depths =
 let result1 =
     depths
     |> Seq.pairwise
-    |> Seq.map (fun (a, b) -> b > a)
-    |> Seq.filter id
+    |> Seq.filter (fun (a, b) -> b > a)
     |> Seq.length
 
 let result2 =
@@ -16,6 +15,5 @@ let result2 =
     |> Seq.windowed 3
     |> Seq.map (fun window -> Seq.reduce (+) window)
     |> Seq.pairwise
-    |> Seq.map (fun (a, b) -> b > a)
-    |> Seq.filter id
+    |> Seq.filter (fun (a, b) -> b > a)
     |> Seq.length
