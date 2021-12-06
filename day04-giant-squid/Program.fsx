@@ -81,3 +81,21 @@ let sumOfUnmarked board =
 let result1 =
     sumOfUnmarked (fst winningBoard)
     * (snd winningBoard)
+
+let rec findLastWinner (boards: seq<Board>) numbers =
+    let n = Seq.head numbers
+    let markedBoards = markBoards boards n
+
+    let notYetWon =
+        markedBoards |> Seq.filter (boardIsWin >> not)
+
+    let remainingNumbers = Seq.skip 1 numbers
+
+    match Seq.tryExactlyOne notYetWon with
+    | Some lastBoard -> runGame [ lastBoard ] remainingNumbers
+    | None -> findLastWinner notYetWon remainingNumbers
+
+let lastWinner = findLastWinner boards numbers
+
+let result2 =
+    sumOfUnmarked (fst lastWinner) * (snd lastWinner)
