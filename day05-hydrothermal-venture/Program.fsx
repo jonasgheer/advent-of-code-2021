@@ -38,11 +38,19 @@ let generatePoints line =
 
     generatePoints [] line.Start
 
-let result1 = 
-    lines 
-    |> Seq.filter isHorizontalOrVertical 
+let findPointsWithOverlap lines = 
+    lines
     |> Seq.map generatePoints 
     |> Seq.concat 
     |> Seq.countBy id 
     |> Seq.filter (fun point -> snd point >= 2) 
     |> Seq.length
+
+let result1 = 
+    lines 
+    |> Seq.filter isHorizontalOrVertical 
+    |> findPointsWithOverlap
+
+let result2 = 
+    lines 
+    |> findPointsWithOverlap
